@@ -2066,6 +2066,46 @@ class MY_Model extends CI_Model
         return $data;
     }
 
+    /**
+     * Public Get Options Select
+     *
+     * The method is util for get option in database return
+     * @param $table
+     * @param $primary_key
+     * @param $label
+     * @param $soft_delete
+     * @param $owner
+     * @return $data
+     */
+    public function GetOptions($table = null, $primary_key = 'id', $label = 'label', $soft_delete = TRUE, $owner_id = false){
+        
+        $criteria = ' 1';
+        
+        if(is_null($table)){
+            show_error('Table not found');
+            return false;
+        }
+        
+        if($owner_id != false){
+            $criteria = ' created_by  = ' . $owner_id; 
+        }
+
+        if($soft_delete){
+            $query = $this->db->query('SELECT ' . $primary_key . ','. $label . ' FROM ' . $table .' where deleted_at = "0000-00-00 00:00:00" AND' . $criteria)->result_array();
+        }else{
+            $query = $this->db->query('SELECT ' . $primary_key . ','. $label . ' FROM ' . $table . ' WHERE ' . $criteria)->result_array();
+        }
+
+        if($query){
+            $dropdown[''] = 'Selecione uma opção:';
+            foreach($query as $row){
+                $dropdown[$row[$primary_key]] = $row[$label];
+            }
+        }
+
+        return $dropdown;
+        
+    }
     
     /*
     public function add_creator($data)
