@@ -974,4 +974,8 @@ Sets a connection group for the current chain query
 ### reset_connection()
 Resets the connection to the database to the one that is set for the model or the default connection
 
+### GetOptions($table = null, $primary_key = 'id', $label = 'label', $soft_delete = TRUE, $owner_id = false)
+This method adds a filter, where the user is specified to which records are to be filtered.
+This is commonly used when you want to list records in a select of a given category.
+
 Enjoy using my MY_Model and please report any issues or try some pull requests. Thank you
